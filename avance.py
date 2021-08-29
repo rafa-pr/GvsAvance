@@ -112,7 +112,7 @@ print("Seleccione el tipo de reacción con la que desea trabajar,"
       "escriba uni para trabajar con una reacción unimolecular o bi para trabajar con una bimolecular")
 respuesta = input("\nReacción a trabajar: ")
 
-if respuesta.lower() == "uni":
+if respuesta.lower() in {"uni"}:
     gibbs_uni = unimolecular(EPSILON, u_a, u_b)
     unit_line = line_uni(EPSILON, u_a, u_b)
     u_a_factor, u_b_factor = axis_uni_create()
@@ -126,7 +126,7 @@ if respuesta.lower() == "uni":
     u_a_factor.on_changed(potencial_quimico_uni)
     u_b_factor.on_changed(potencial_quimico_uni)
     plt.show()
-elif respuesta.lower() == "bi":
+elif respuesta.lower() in {"bi"}:
     gibbs_bi = bimolecular(EPSILON, u_a, u_b, u_ab)
     u_a_factor, u_b_factor, u_ab_factor = axis_bi_create()
     ax.grid()
@@ -134,7 +134,7 @@ elif respuesta.lower() == "bi":
     ax.set_xlim(0.0,1.0001)
     ax.set_xlabel('ξ')
     ax.set_ylabel('ΔGsist')
-    plot_func, = ax.plot(EPSILON, gibbs_uni, "g")
+    plot_func, = ax.plot(EPSILON, gibbs_bi, "g")
     u_a_factor.on_changed(potencial_quimico_di)
     u_b_factor.on_changed(potencial_quimico_di)
     u_ab_factor.on_changed(potencial_quimico_di)
