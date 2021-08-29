@@ -2,12 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 
-
+#Condiciones de reacción
 R = 8.314
 T = 298.15
 u_a = 0
 u_b = 0
 u_ab = 0
+#Rango de avance de reacción
 EPSILON = np.linspace(0.00001, 0.9999999999, 100)
 fig = plt.figure(figsize=(10,7))
 ax = fig.subplots()
@@ -36,18 +37,18 @@ def bimolecular(epsilon,u_a, u_b, u_ab, P=1):
 
 
 def axis_uni_create():
-    """"""
+    """Crea las barras de desplazamiento para los potenciales"""
     u_a_slider = plt.axes([0.15, 0.05, 0.7, 0.02])
     u_b_slider = plt.axes([0.15, 0.1, 0.7, 0.02])
     u_a_factor = Slider(u_a_slider,
-                            "u_A°",
+                            "μ_A°",
                             valmin=-1000,
                             valmax=1000,
                             valinit=0,
                             valstep=20,
                             )
     u_b_factor = Slider(u_b_slider,
-                            "u_B°",
+                            "μ_B°",
                             valmin=-1000,
                             valmax=1000,
                             valinit=0,
@@ -57,27 +58,27 @@ def axis_uni_create():
 
 
 def axis_bi_create():
-    """"""
+    """Crea las barras de desplazamiento para los potenciales"""
     u_a_slider = plt.axes([0.15, 0.03, 0.7, 0.02])
     u_b_slider = plt.axes([0.15, 0.07, 0.7, 0.02])
     u_ab_slider = plt.axes([0.15, 0.12, 0.7, 0.02])
 
     u_a_factor = Slider(u_a_slider,
-                        "u_A°",
+                        "μ_A°",
                         valmin=-1000,
                         valmax=1000,
                         valinit=0,
                         valstep=20,
                         )
     u_b_factor = Slider(u_b_slider,
-                        "u_B°",
+                        "μ_B°",
                         valmin=-1000,
                         valmax=1000,
                         valinit=0,
                         valstep=20,
                         )
     u_ab_factor = Slider(u_ab_slider,
-                        "u_AB°",
+                        "μ_AB°",
                         valmin=-1000,
                         valmax=1000,
                         valinit=0,
@@ -118,8 +119,8 @@ if respuesta.lower() == "uni":
     ax.grid()
     ax.set_ylim(-2800,1050)
     ax.set_xlim(0,1)
-    ax.set_ylim(-4000,1500)
-    ax.set_xlim(0.0,1.0001)
+    ax.set_xlabel('ξ')
+    ax.set_ylabel('ΔGsist')
     plot_func, = ax.plot(EPSILON, gibbs_uni, "g")
     plot_func_2, = ax.plot(EPSILON, unit_line, "r")
     u_a_factor.on_changed(potencial_quimico_uni)
@@ -131,8 +132,8 @@ elif respuesta.lower() == "bi":
     ax.grid()
     ax.set_ylim(-4000,1500)
     ax.set_xlim(0.0,1.0001)
-    ax.set_xlabel('E')
-    ax.set_ylabel('Gsist')
+    ax.set_xlabel('ξ')
+    ax.set_ylabel('ΔGsist')
     plot_func, = ax.plot(EPSILON, gibbs_uni, "g")
     u_a_factor.on_changed(potencial_quimico_di)
     u_b_factor.on_changed(potencial_quimico_di)
