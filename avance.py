@@ -92,14 +92,17 @@ def axis_bi_create():
 
 def potencial_quimico_uni1(val):
     """Actualizar u_A y u_B con los valores de la barra de desplazamiento"""
+    '''Crea un anotador global que muestra el mínimo de la curva'''
     global note
     current_u_A = u_a_factor.val
     current_u_B = u_b_factor.val
     gibbs_uni = unimolecular(EPSILON, current_u_A, current_u_B)
     gibbs_lin = line_uni(EPSILON, current_u_A, current_u_B)
+    '''Halla el mínimo de la curva G y selecciona el epsilon al cual este mínimo G pertenece'''
     minGibbs = min(gibbs_uni)
     minPosGibss=  np.argmin(gibbs_uni)
     minEPSILON = EPSILON[minPosGibss]
+    '''Actualiza y crea el anotador del mínimo'''
     try:
         note.remove()
     except:
@@ -116,20 +119,19 @@ def potencial_quimico_uni1(val):
 
 def  potencial_quimico_di(val):
     global note
-    
     """Actualizar u_A, u_B y u_AB con los valores de la barra de desplazamiento"""
     current_u_A = u_a_factor.val
     current_u_B = u_b_factor.val
     current_u_AB = u_ab_factor.val
     gibbs_bi = bimolecular(EPSILON, current_u_A, current_u_B, current_u_AB )
     
-    """Función para trazar el mínimo""" 
+    '''Halla el mínimo de la curva G y selecciona el epsilon al cual este mínimo G pertenece''' 
     
     minGibbs = min(gibbs_bi)
     minPosGibss=  np.argmin(gibbs_bi)
     
     minEPSILON = EPSILON[minPosGibss]
-    
+    '''Actualiza y crea el anotador del mínimo'''
     try:
         note.remove()
     except:
@@ -148,6 +150,7 @@ print("Seleccione el tipo de reacción con la que desea trabajar,"
       "escriba uni para trabajar con una reacción unimolecular o bi para trabajar con una bimolecular")
 respuesta = input("\nReacción a trabajar: ")
 
+#Condicionales para graficar alguno de los casos, con las conidiciones de ploteo 
 if respuesta.lower() in {"uni"}:
     gibbs_uni = unimolecular(EPSILON, u_a, u_b)
     unit_line = line_uni(EPSILON, u_a_l, u_b_l)
